@@ -28,9 +28,9 @@ docker-compose up -d
 
 This application basically uses Quarkus Framework with Java 11 with some other modules known to development community:
 
-* Hibernate 5
+* Hibernate 6
 * Jackson for JSON
-* H2 in memory database
+* InterSystems IRIS database
 * JPA Criteria
 * Auth0 java-jwt
 
@@ -93,11 +93,12 @@ and database engine need to be changed.
 
 ```properties
 # Database configuration
-quarkus.datasource.db-kind=h2
-quarkus.datasource.jdbc.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-quarkus.datasource.jdbc.driver=org.h2.Driver
-quarkus.datasource.username=sa
-quarkus.datasource.password=
+quarkus.datasource.db-kind=other
+quarkus.datasource.jdbc.url=jdbc:IRIS://localhost:1972/REALWORLD
+quarkus.datasource.jdbc.driver=com.intersystems.jdbc.IRISDriver
+quarkus.datasource.username=_SYSTEM
+quarkus.datasource.password=SYS
+quarkus.hibernate-orm.dialect=io.github.yurimarx.hibernateirisdialect.InterSystemsIRISDialect
 ```
 
 ## Help
