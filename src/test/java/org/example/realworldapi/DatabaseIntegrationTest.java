@@ -1,6 +1,6 @@
 package org.example.realworldapi;
 
-import org.h2.jdbcx.JdbcDataSource;
+import com.intersystems.jdbc.IRISDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -8,10 +8,10 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.reflections.Reflections;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Table;
 import javax.sql.DataSource;
 import java.util.HashSet;
 import java.util.Properties;
@@ -58,8 +58,8 @@ public class DatabaseIntegrationTest {
 
   private static Properties properties() {
     Properties properties = new Properties();
-    properties.put(Environment.DRIVER, "org.h2.Driver");
-    properties.put(Environment.DIALECT, "org.example.realworldapi.H2CustomDialect");
+    properties.put(Environment.DRIVER, "com.intersystems.jdbc.IRISDriver");
+    properties.put(Environment.DIALECT, "io.github.yurimarx.hibernateirisdialect.InterSystemsIRISDialect");
     properties.put(Environment.SHOW_SQL, true);
     properties.put(Environment.FORMAT_SQL, true);
     properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
@@ -81,10 +81,13 @@ public class DatabaseIntegrationTest {
   }
 
   private static DataSource dataSource() {
-    JdbcDataSource jdbcDataSource = new JdbcDataSource();
-    jdbcDataSource.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
-    jdbcDataSource.setUser("sa");
-    jdbcDataSource.setPassword("");
+    IRISDataSource jdbcDataSource = new IRISDataSource();
+    // jdbcDataSource.setUrl("jdbc:IRIS://localhost:5572/USER");
+    jdbcDataSource.setServerName("localhost");
+    jdbcDataSource.setPortNumber(5572);
+    jdbcDataSource.setDatabaseName("USER");
+    jdbcDataSource.setUser("_SYSTEM");
+    jdbcDataSource.setPassword("SYS");
     return jdbcDataSource;
   }
 
@@ -94,10 +97,7 @@ public class DatabaseIntegrationTest {
             entities.forEach(
                 tableName ->
                     entityManager
-                        .createNativeQuery(
-                            "SET REFERENTIAL_INTEGRITY FALSE; TRUNCATE TABLE "
-                                + tableName
-                                + "; SET REFERENTIAL_INTEGRITY TRUE;")
+                        .createNativeQuery("TRUNCATE TABLE %NOCHECK " + tableName)
                         .executeUpdate()));
   }
 

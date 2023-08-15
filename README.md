@@ -12,6 +12,18 @@ the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
 [![Java CI with Maven](https://github.com/diegocamara/realworld-api-quarkus/actions/workflows/maven.yml/badge.svg)](https://github.com/diegocamara/realworld-api-quarkus/actions/workflows/maven.yml)
 
+# InterSystems IRIS Support
+
+Original project: https://github.com/diegocamara/realworld-api-quarkus
+
+* Upgraded Quarkus
+* Added InterSystems IRIS as default datasource
+
+Start IRIS with docker-compose, before run application
+```
+docker-compose up -d
+```
+
 # How it works
 
 This application basically uses Quarkus Framework with Java 11 with some other modules known to development community:

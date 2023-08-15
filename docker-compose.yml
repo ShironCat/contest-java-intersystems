@@ -1,0 +1,11 @@
+version: "3"
+services:
+  iris: 
+    image: intersystemsdc/iris-community
+    ports:
+      - 5572:1972
+      - 55773:52773
+    environment:
+      - IRIS_USERNAME=_SYSTEM
+      - IRIS_PASSWORD=SYS
+      - IRIS_NAMESPACE=REALWORLD

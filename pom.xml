@@ -14,7 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>2.9.2.Final</quarkus.platform.version>
+        <quarkus.platform.version>3.2.4.Final</quarkus.platform.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     </properties>
     <dependencyManagement>
@@ -91,7 +91,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -107,6 +107,16 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
+        <dependency>
+			<groupId>io.github.yurimarx</groupId>
+			<artifactId>hibernateirisdialect</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.intersystems</groupId>
+			<artifactId>intersystems-jdbc</artifactId>
+			<version>3.7.1</version>
+		</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -185,4 +195,14 @@
             </properties>
         </profile>
     </profiles>
+    <repositories>
+		<repository>
+			<id>InterSystems IRIS DC Git Repository</id>
+			<url>https://raw.githubusercontent.com/intersystems-community/iris-driver-distribution/main/JDBC/JDK18/</url>				
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>    
 </project>
